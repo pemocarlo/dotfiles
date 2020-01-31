@@ -34,7 +34,11 @@
   (setq +org-capture-todo-file "projects/breathe.org")
   (setq +org-capture-projects-file "projects/projects.org")
   (setq org-agenda-files '("~/my_files/projects/breathe.org"))
-  )
+  (setq org-agenda-files '("~/my_files/projects/breathe.org"))
+
+  ;; Make it possible to reference code blocks, figures etc.
+  (setq org-ref-completion-library 'org-ref-ivy-cite))
+
 
 (after! org-journal
   (defun org-journal-save-entry-and-exit()
@@ -45,8 +49,53 @@
     (save-buffer)
     (kill-buffer-and-window))
   (define-key org-journal-mode-map (kbd "C-x C-s") 'org-journal-save-entry-and-exit)
-  )
+  (setq org-journal-file-header 'org-journal-file-header-func)
 
+  (defun org-journal-file-header-func ()
+  "Custom function to create journal header."
+  (concat
+    (pcase org-journal-file-type
+      (`daily "#+TITLE: Daily Journal\n#+STARTUP: showeverything")
+      (`weekly "#+TITLE: Weekly Journal\n#+STARTUP: folded")
+      (`monthly "#+TITLE: Monthly Journal\n#+STARTUP: folded")
+      (`yearly "#+TITLE: Yearly Journal\n#+STARTUP: folded")))))
+
+(after! org
+  (defun org-journal-find-location ()
+  ;; Open today's journal, but specify a non-nil prefix argument in order to
+  ;; inhibit inserting the heading; org-capture will insert the heading.
+  (org-journal-new-entry t)
+  ;; Position point on the journal's top-level heading so that org-capture
+  ;; will add the new entry as a child entry.
+  (goto-char (point-min)))
+
+  (add-to-list 'org-capture-templates
+               '("d" "diary"))
+
+  (add-to-list 'org-capture-templates
+               '("dn" "New Diary Entry" entry (function org-journal-find-location)
+                 (file "~/my_files/templates/diary_entry.org" )))
+
+  (add-to-list 'org-capture-templates
+               '("ds" "New Diary Summary" entry (function org-journal-find-location)
+                 (file "~/my_files/templates/diary_summary.org")))
+  (add-to-list 'org-capture-templates
+               '("dl" "New Diary log" entry(function org-journal-find-location)
+                 (file "~/my_files/templates/diary_log.org")))
+
+  (defun my-new-weekly-review ()
+  (interactive)
+  (let ((org-capture-templates '(("w" "Review: Weekly Review" entry (file+olp+datetree "~/my_files/reviews.org")
+                                  (file "~/my_files/templates/weekly_review.org")))))
+    (progn
+      (org-capture nil "w")
+      (org-capture-finalize t)
+      (org-speed-move-safe 'outline-up-heading)
+      (org-narrow-to-subtree)
+      ;; (fetch-calendar)
+      (org-clock-in)))))
+
+  
 (setenv "WORKON_HOME" "/home/cperezm/miniconda3/envs")
 
 ;; If you want to change the style of line numbers, change this to `relative' or
@@ -72,3 +121,29 @@
 
 ;; Grammar check
 (setq langtool-language-tool-jar "~/LanguageTool-4.8/languagetool-commandline.jar" )
+
+(after! dap-mode
+
+  ;; (dap-register-debug-provider
+ ;; "cppdbg"
+ ;; (lambda (conf)
+ ;;   (plist-put conf
+ ;;              :dap-server-path
+ ;;              '("/home/kyoncho/.vscode/extensions/ms-vscode.cpptools-0.19.0/debugAdapters/OpenDebugAD7"))
+ ;;   conf))
+
+(dap-register-debug-template "C++ Run Simulator:lldb"
+                             (list :type "lldb"
+                                   :cwd "/home/cperezm/master-HMDA/ws19-20/advPT/project/starcraft2-simulator"
+                                   :request "launch"
+                                   :program "/home/cperezm/master-HMDA/ws19-20/advPT/project/starcraft2-simulator/build/bin/SC2Simulator"
+                                   :name "Run simulator lldb"))
+
+(dap-register-debug-template "C++ Run Simulator:gdb"
+                             (list :type "gdb"
+                                   :cwd "/home/cperezm/master-HMDA/ws19-20/advPT/project/starcraft2-simulator"
+                                   :request "launch"
+                                   :program "/home/cperezm/master-HMDA/ws19-20/advPT/project/starcraft2-simulator/build/bin/SC2Simulator"
+                                   :name "Run simulator gdb"))
+
+  )
