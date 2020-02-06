@@ -30,14 +30,19 @@
 ;; If you intend to use org, it is recommended you change this!
 (setq org-directory "~/my_files/")
 
+(setq +org-enable-centralized-exports nil)
+
 (after! org
   (setq +org-capture-todo-file "projects/breathe.org")
   (setq +org-capture-projects-file "projects/projects.org")
   (setq org-agenda-files '("~/my_files/projects/breathe.org"))
   (setq org-agenda-files '("~/my_files/projects/breathe.org"))
+  (setq org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
 
   ;; Make it possible to reference code blocks, figures etc.
-  (setq org-ref-completion-library 'org-ref-ivy-cite))
+  (setq org-ref-completion-library 'org-ref-ivy-cite)
+  )
+
 
 
 (after! org-journal
@@ -147,3 +152,47 @@
                                    :name "Run simulator gdb"))
 
   )
+
+;; ~/.doom.d/config.el
+(setq +python-ipython-repl-args '("-i" "--simple-prompt" "--no-color-info"))
+(setq +python-jupyter-repl-args '("--simple-prompt"))
+
+
+(use-package! org-ref
+  :after org
+  :demand t
+  :config
+  (setq org-ref-default-bibliography '("~/my_files/courses/videos/latex/manuscript.bib")
+        bibtex-completion-pdf-field "file"
+        org-ref-default-citation-link "parencite")
+
+  (defun org-ref-open-pdf-at-point-in-emacs ()
+    "Open the pdf for bibtex key under point if it exists."
+    (interactive)
+    (let* ((results (org-ref-get-bibtex-key-and-file))
+           (key (car results))
+           (pdf-file (funcall org-ref-get-pdf-filename-function key)))
+      (if (file-exists-p pdf-file)
+          (find-file-other-window pdf-file)
+        (message "no pdf found for %s" key))))
+
+  (defun org-ref-open-in-scihub ()
+    "Open the bibtex entry at point in a browser using the url field or doi field.
+Not for real use, just here for demonstration purposes."
+    (interactive)
+    (let ((doi (org-ref-get-doi-at-point)))
+      (when doi
+        (if (string-match "^http" doi)
+            (browse-url doi)
+          (browse-url (format "http://sci-hub.se/%s" doi)))
+        (message "No url or doi found"))))
+
+  (setq org-ref-helm-user-candidates
+        '(("Open in Sci-hub"  . org-ref-open-in-scihub)
+          ("Open in Emacs" . org-ref-open-pdf-at-point-in-emacs)))
+  )
+
+
+(use-package! ox-word
+  :after (:all org-ref ox)
+  :demand t)
