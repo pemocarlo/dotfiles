@@ -162,9 +162,10 @@
   :after org
   :demand t
   :config
-  (setq org-ref-default-bibliography '("~/my_files/courses/videos/latex/manuscript.bib")
-        bibtex-completion-pdf-field "file"
-        org-ref-default-citation-link "parencite")
+  (setq
+   org-ref-default-bibliography '("~/my_files/references.bib")
+   bibtex-completion-pdf-field "file"
+   org-ref-default-citation-link "parencite")
 
   (defun org-ref-open-pdf-at-point-in-emacs ()
     "Open the pdf for bibtex key under point if it exists."
