@@ -197,3 +197,13 @@ Not for real use, just here for demonstration purposes."
 (use-package! ox-word
   :after (:all org-ref ox)
   :demand t)
+
+(use-package! org-noter
+  :after org
+  :config
+  (setq org-noter-default-notes-file-names nil
+        ;; org-noter-always-create-frame nil
+        org-noter-notes-search-path '("~/my_files/research-notes")
+        org-noter-separate-notes-from-heading t
+        org-noter-auto-save-last-location t)
+  )
