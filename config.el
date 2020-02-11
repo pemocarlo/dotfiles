@@ -207,3 +207,5 @@ Not for real use, just here for demonstration purposes."
         org-noter-separate-notes-from-heading t
         org-noter-auto-save-last-location t)
   )
+(setq +org-enable-centralized-exports nil)
+
