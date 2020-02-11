@@ -151,7 +151,10 @@
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
-       (python +lsp +conda +pyenv)            ; beautiful is better than ugly
+       (python           ; beautiful is better than ugly
+        +lsp
+        +conda
+        +pyenv)
        ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
        ;;rest              ; Emacs as a REST client
