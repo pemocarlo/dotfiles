@@ -56,10 +56,8 @@
 (package! org-noter)
 (package! org-ref)
 
-(package! ox-word :recipe (:local-repo "~/ox-word"))
 
-(package! cdlatex
-  :recipe (:host github :repo "cdominik/cdlatex"))
+(package! ox-word :recipe (:local-repo "~/ox-word"))
 
 (package! org-re-reveal-ref
   :recipe (:host gitlab :repo "oer/org-re-reveal-ref"))
