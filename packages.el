@@ -53,9 +53,11 @@
 
 
 ;; writing
-(package! org-noter)
-(package! org-ref)
+(package! org-noter
+   :recipe (:host github :repo "https://github.com/weirdNox/org-noter"))
 
+(package! org-ref
+   :recipe (:host github :repo "https://github.com/jkitchin/org-ref"))
 
 (package! ox-word :recipe (:local-repo "~/ox-word"))
 
