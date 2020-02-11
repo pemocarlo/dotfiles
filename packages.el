@@ -56,10 +56,7 @@
 (package! org-noter)
 (package! org-ref)
 
-(package! ox-word :recipe
-  (:host github
-   :repo "jkitchin/scimax"
-   :files ("ox-word.el")))
+(package! ox-word :recipe (:local-repo "~/ox-word"))
 
 (package! cdlatex
   :recipe (:host github :repo "cdominik/cdlatex"))
