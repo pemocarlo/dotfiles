@@ -63,3 +63,6 @@
 
 (package! cdlatex
   :recipe (:host github :repo "cdominik/cdlatex"))
+
+(package! org-re-reveal-ref
+  :recipe (:host gitlab :repo "oer/org-re-reveal-ref"))
