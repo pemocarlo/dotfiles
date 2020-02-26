@@ -57,22 +57,22 @@
   (setq org-journal-file-header 'org-journal-file-header-func)
 
   (defun org-journal-file-header-func ()
-  "Custom function to create journal header."
-  (concat
-    (pcase org-journal-file-type
-      (`daily "#+TITLE: Daily Journal\n#+STARTUP: showeverything")
-      (`weekly "#+TITLE: Weekly Journal\n#+STARTUP: folded")
-      (`monthly "#+TITLE: Monthly Journal\n#+STARTUP: folded")
-      (`yearly "#+TITLE: Yearly Journal\n#+STARTUP: folded")))))
+    "Custom function to create journal header."
+    (concat
+     (pcase org-journal-file-type
+       (`daily "#+TITLE: Daily Journal\n#+STARTUP: showeverything")
+       (`weekly "#+TITLE: Weekly Journal\n#+STARTUP: folded")
+       (`monthly "#+TITLE: Monthly Journal\n#+STARTUP: folded")
+       (`yearly "#+TITLE: Yearly Journal\n#+STARTUP: folded")))))
 
 (after! org
   (defun org-journal-find-location ()
-  ;; Open today's journal, but specify a non-nil prefix argument in order to
-  ;; inhibit inserting the heading; org-capture will insert the heading.
-  (org-journal-new-entry t)
-  ;; Position point on the journal's top-level heading so that org-capture
-  ;; will add the new entry as a child entry.
-  (goto-char (point-min)))
+    ;; Open today's journal, but specify a non-nil prefix argument in order to
+    ;; inhibit inserting the heading; org-capture will insert the heading.
+    (org-journal-new-entry t)
+    ;; Position point on the journal's top-level heading so that org-capture
+    ;; will add the new entry as a child entry.
+    (goto-char (point-min)))
 
   (add-to-list 'org-capture-templates
                '("d" "diary"))
@@ -89,18 +89,18 @@
                  (file "~/my_files/templates/diary_log.org")))
 
   (defun my-new-weekly-review ()
-  (interactive)
-  (let ((org-capture-templates '(("w" "Review: Weekly Review" entry (file+olp+datetree "~/my_files/reviews.org")
-                                  (file "~/my_files/templates/weekly_review.org")))))
-    (progn
-      (org-capture nil "w")
-      (org-capture-finalize t)
-      (org-speed-move-safe 'outline-up-heading)
-      (org-narrow-to-subtree)
-      ;; (fetch-calendar)
-      (org-clock-in)))))
+    (interactive)
+    (let ((org-capture-templates '(("w" "Review: Weekly Review" entry (file+olp+datetree "~/my_files/reviews.org")
+                                    (file "~/my_files/templates/weekly_review.org")))))
+      (progn
+        (org-capture nil "w")
+        (org-capture-finalize t)
+        (org-speed-move-safe 'outline-up-heading)
+        (org-narrow-to-subtree)
+        ;; (fetch-calendar)
+        (org-clock-in)))))
 
-  
+
 (setenv "WORKON_HOME" "/home/cperezm/miniconda3/envs")
 
 ;; If you want to change the style of line numbers, change this to `relative' or
