@@ -130,30 +130,31 @@
 (after! dap-mode
 
   ;; (dap-register-debug-provider
- ;; "cppdbg"
- ;; (lambda (conf)
- ;;   (plist-put conf
- ;;              :dap-server-path
- ;;              '("/home/kyoncho/.vscode/extensions/ms-vscode.cpptools-0.19.0/debugAdapters/OpenDebugAD7"))
- ;;   conf))
+  ;; "cppdbg"
+  ;; (lambda (conf)
+  ;;   (plist-put conf
+  ;;              :dap-server-path
+  ;;              '("/home/kyoncho/.vscode/extensions/ms-vscode.cpptools-0.19.0/debugAdapters/OpenDebugAD7"))
+  ;;   conf))
 
-(dap-register-debug-template "C++ Run Simulator:lldb"
-                             (list :type "lldb"
-                                   :cwd "/home/cperezm/master-HMDA/ws19-20/advPT/project/starcraft2-simulator"
-                                   :request "launch"
-                                   :program "/home/cperezm/master-HMDA/ws19-20/advPT/project/starcraft2-simulator/build/bin/SC2Simulator"
-                                   :name "Run simulator lldb"))
+  (dap-register-debug-template "C++ Run Simulator:lldb"
+                               (list :type "lldb"
+                                     :cwd "/home/cperezm/master-HMDA/ws19-20/advPT/project/starcraft2-simulator"
+                                     :request "launch"
+                                     :program "/home/cperezm/master-HMDA/ws19-20/advPT/project/starcraft2-simulator/build/bin/SC2Simulator"
+                                     :name "Run simulator lldb"))
 
-(dap-register-debug-template "C++ Run Simulator:gdb"
-                             (list :type "gdb"
-                                   :cwd "/home/cperezm/master-HMDA/ws19-20/advPT/project/starcraft2-simulator"
-                                   :request "launch"
-                                   :program "/home/cperezm/master-HMDA/ws19-20/advPT/project/starcraft2-simulator/build/bin/SC2Simulator"
-                                   :name "Run simulator gdb"))
+  (dap-register-debug-template "C++ Run Simulator:gdb"
+                               (list :type "gdb"
+                                     :cwd "/home/cperezm/master-HMDA/ws19-20/advPT/project/starcraft2-simulator"
+                                     :request "launch"
+                                     :program "/home/cperezm/master-HMDA/ws19-20/advPT/project/starcraft2-simulator/build/bin/SC2Simulator"
+                                     :name "Run simulator gdb"))
 
   )
 
 ;; ~/.doom.d/config.el
+(setq python-shell-prompt-detect-failure-warning nil)
 (setq +python-ipython-repl-args '("-i" "--simple-prompt" "--no-color-info"))
 (setq +python-jupyter-repl-args '("--simple-prompt"))
 
