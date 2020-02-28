@@ -336,9 +336,27 @@ if nil,the top of the file."
     (interactive)
     (org-refile-subtree-to-file -org-default-personal-dir))
 
+  ;; (setq org-refile-targets (append '((-org-default-media-file :level . 1)
+  ;;                                     (-org-default-notes-file :level . 0))
+  ;;                                   (->>
+  ;;                                    (directory-files -org-default-projects-dir nil ".org")
+  ;;                                    (-remove-item (file-name-base -org-default-media-file))
+  ;;                                    (--remove (s-starts-with? "." it))
+  ;;                                    (--map (format "%s/%s" -org-default-projects-dir it))
+  ;;                                    (--map `(,it :level . 0)))
 
+  ;;                                   (->>
+  ;;                                    (directory-files -org-default-technical-dir nil ".org")
+  ;;                                    (--map (format "%s/%s" -org-default-technical-dir it))
+  ;;                                    (--map `(,it :level . 0)))
 
+  ;;                                   ))
 
+  ;; (add-to-list org-refile-targets  '((concat -org-default-completed-dir "master-completed.org") :maxlevel . 2 ))
+
+  (add-to-list 'org-refile-targets '("~/my_files/projects/trophies/master-completed.org" :maxlevel . 2))
+  (add-to-list 'org-refile-targets '("~/my_files/personal/life_improvement.org" :maxlevel . 1))
+  (add-to-list 'org-refile-targets '("~/my_files/personal/conversational.org" :maxlevel . 2))
 
   (setq +org-capture-todo-file "projects/breathe.org")
   (setq +org-capture-projects-file "projects/projects.org")
