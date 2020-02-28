@@ -61,7 +61,7 @@
 
   (defvar -org-default-completed-file
     nil
-    "Ideas simmering on back burner.")
+    "Finished projects")
 
   (defvar -org-default-notes-file
     (concat -org-default-personal-dir "general-notes.org")
