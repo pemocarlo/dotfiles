@@ -71,7 +71,7 @@
     (concat -org-default-projects-dir "media.org")
     "White papers and links to other things to check out.")
 
-  (defhydra hydra-org-refiler ()
+  (defhydra hydra-org-refiler ( :hint nil)
     "
   ^Navigate^      ^Refile^       ^Move^           ^Update^        ^Go To^        ^Dired^
   ^^^^^^^^^^---------------------------------------------------------------------------------------
@@ -111,7 +111,8 @@
     ("q" nil "quit")
     )
 
-  (bind-key "C-c s" 'hydra-org-refiler/body)
+  (map! :map org "C-c s" #'hydra-org-refiler/body)
+  ;; (bind-key "C-c s" 'hydra-org-refiler/body)
 
   (defun org-refile-to-incubate ()
     "Refile (move) the current Org subtree to `-org-default-incubate-file'."
@@ -171,7 +172,7 @@ where all good journal entries live, e.g. ~/journal."
            (org-archive-location (format "%s::" org-archive-file)))
       (org-archive-subtree)))
 
-  
+
 
   (defun org-subtree-metadata ()
     "Return a list of key aspects of an org-subtree. Includes the
