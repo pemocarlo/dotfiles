@@ -64,5 +64,3 @@
 (package! org-re-reveal-ref
           :recipe (:host gitlab :repo "oer/org-re-reveal-ref"))
 
-(package! org-re-reveal
-  :recipe (:host gitlab :repo "oer/org-re-reveal"))
