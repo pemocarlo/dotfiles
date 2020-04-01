@@ -364,6 +364,30 @@ if nil,the top of the file."
   (setq org-agenda-file-regexp "^[a-z0-9-_]+.org")
   (setq org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
 
+  (after! org-agenda
+    (setq org-agenda-block-separator nil
+          org-agenda-start-with-log-mode t)
+
+    (setq org-agenda-custom-commands
+          `(("z" "Custom view"
+             ((agenda ""
+                      ((org-agenda-span 'day)
+                       (org-deadline-warning-days 365)))
+              (todo "TODO"
+                    ((org-agenda-overriding-header "To Refile")
+                     (org-agenda-files `(,-org-default-inbox-file))))
+              (todo "TODO"
+                    ((org-agenda-overriding-header "Projects")
+                     (org-agenda-files `(,(concat -org-default-projects-dir "master.org")))))
+              (todo "TODO"
+                    ((org-agenda-overriding-header "One-off Tasks")
+                     (org-agenda-files `(,-org-default-tasks-file))
+                     (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))
+              )))))
+
+
+  ;; (add-to-list 'org-agenda-custom-commands '(my/org-agenda-todo-view))
+
   ;; Make it possible to reference code blocks, figures etc.
   (setq org-ref-completion-library 'org-ref-ivy-cite)
   )
