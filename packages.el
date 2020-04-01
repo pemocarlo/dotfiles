@@ -64,3 +64,6 @@
 (package! org-re-reveal-ref
           :recipe (:host gitlab :repo "oer/org-re-reveal-ref"))
 
+(package! nov
+          :recipe (:host github :repo "wasamasa/nov.el"))
+
