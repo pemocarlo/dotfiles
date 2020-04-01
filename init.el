@@ -151,8 +151,10 @@
         +present        ; using org-mode for presentations
         +roam
         )
+
        ;;perl              ; write code no one else can comprehend
-       ;;php               ; perl's insecure younger brother
+       (php               ; perl's insecure younger brother
+        +lsp)
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
        (python           ; beautiful is better than ugly
@@ -167,7 +169,8 @@
        ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;;scheme            ; a fully conniving family of lisps
-       sh                ; she sells {ba,z,fi}sh shells on the C xor
+       (sh                ; she sells {ba,z,fi}sh shells on the C xor
+        +lsp)
        ;;solidity          ; do you need a blockchain? No.
        ;;swift             ; who asked for emoji variables?
        ;;terra             ; Earth and Moon in alignment for performance.
