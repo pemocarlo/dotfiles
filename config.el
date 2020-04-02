@@ -30,6 +30,9 @@
 ;; If you intend to use org, it is recommended you change this!
 (setq org-directory "~/my_files/")
 (setq org-roam-directory "~/my_files/my-notes/org/")
+(setq deft-directory "~/my_files/my-notes/org/")
+(setq deft-extensions '("txt" "tex" "org"))
+(setq deft-recursive t)
 
 (after! org
 
