@@ -375,7 +375,7 @@ if nil,the top of the file."
     (setq org-agenda-custom-commands
           `(("z" "Custom view"
              ((agenda ""
-                      ((org-agenda-span 'day)
+                      ((org-agenda-span 'week)
                        (org-deadline-warning-days 365)))
               (todo "TODO"
                     ((org-agenda-overriding-header "To Refile")
@@ -388,6 +388,29 @@ if nil,the top of the file."
                      (org-agenda-files `(,-org-default-tasks-file))
                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'deadline 'scheduled))))
               )))))
+
+
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+          (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
+
+  (setq org-log-done 'time
+        org-log-into-drawer t
+        org-log-state-notes-insert-after-drawers nil)
+
+  (setq org-tag-alist (quote (("@errand" . ?e)
+                              ("@office" . ?o)
+                              ("@home" . ?h)
+                              ("@school" . ?s)
+                              (:newline)
+                              ("WAITING" . ?w)
+                              ("HOLD" . ?H)
+                              ("CANCELLED" . ?c))))
+
+  (setq org-fast-tag-selection-single-key nil)
+  (setq org-refile-use-outline-path 'file
+        org-outline-path-complete-in-steps nil)
+  (setq org-refile-allow-creating-parent-nodes 'confirm)
 
 
   ;; (add-to-list 'org-agenda-custom-commands '(my/org-agenda-todo-view))
