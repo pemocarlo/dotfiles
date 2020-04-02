@@ -29,6 +29,7 @@
 
 ;; If you intend to use org, it is recommended you change this!
 (setq org-directory "~/my_files/")
+(setq org-roam-directory "~/my_files/my-notes/org/")
 
 (after! org
 
@@ -448,6 +449,67 @@ if nil,the top of the file."
         (org-narrow-to-subtree)
         ;; (fetch-calendar)
         (org-clock-in)))))
+
+
+(use-package! org-roam
+  :hook
+  (after-init . org-roam-mode)
+  :custom-face
+  (org-roam-link ((t (:inherit org-link :foreground "#005200"))))
+  :init
+  (setq
+   org-roam-db-location "~/my_files/org-roam.db"
+   org-roam-graph-exclude-matcher "private")
+  (setq org-roam-buffer-position 'left)
+  :config
+  (require 'org-roam-protocol)
+  (setq org-roam-capture-templates
+        '(("d" "default" plain (function org-roam--capture-get-point)
+           "%?"
+           :file-name "${slug}"
+           :head "#+SETUPFILE:./hugo_setup.org
+#+HUGO_SECTION: zettels
+#+HUGO_SLUG: ${slug}
+#+TITLE: ${title}\n"
+           :unnarrowed t)
+          ("p" "private" plain (function org-roam-capture--get-point)
+           "%?"
+           :file-name "private-${slug}"
+           :head "#+TITLE: ${title}\n"
+           :unnarrowed t)))
+  (setq org-roam-ref-capture-templates
+        '(("r" "ref" plain (function org-roam-capture--get-point)
+           "%?"
+           :file-name "websites/${slug}"
+           :head "#+SETUPFILE:./hugo_setup.org
+#+ROAM_KEY: ${ref}
+#+HUGO_SLUG: ${slug}
+#+TITLE: ${title}
+- source :: ${ref}"
+           :unnarrowed t))))
+
+
+(after! org-roam
+  (defun my/org-roam--backlinks-list (file)
+    (if (org-roam--org-roam-file-p file)
+        (--reduce-from
+         (concat acc (format "- [[file:%s][%s]]\n"
+                             (file-relative-name (car it) org-roam-directory)
+                             (org-roam--get-title-or-slug (car it))))
+         "" (org-roam-sql [:select [file-from]
+                                   :from file-links
+                                   :where (= file-to $s1)
+                                   :and file-from :not :like $s2] file "%private%"))
+      ""))
+
+  (defun my/org-export-preprocessor (_backend)
+    (let ((links (my/org-roam--backlinks-list (buffer-file-name))))
+      (unless (string= links "")
+        (save-excursion
+          (goto-char (point-max))
+          (insert (concat "\n* Backlinks\n" links))))))
+  (add-hook 'org-export-before-processing-hook 'my/org-export-preprocessor))
+
 
 
 (setenv "WORKON_HOME" "/home/cperezm/miniconda3/envs")
