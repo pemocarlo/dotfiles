@@ -650,3 +650,5 @@ Not for real use, just here for demonstration purposes."
 (use-package! org-re-reveal-ref
   :after (:all org-re-reveal org-ref ox)
   :demand t)
+
+(setq ein:output-area-inlined-images t)
