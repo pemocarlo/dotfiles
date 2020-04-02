@@ -1,0 +1,16 @@
+#+TITLE: Readme
+
+This repository contains the latest version of my dot files.
+It uses [[https://github.com/anishathalye/dotbot][dotbot]] for installation
+
+
+* How to use it
+To use it, clone the repo and run:
+
+#+BEGIN_SRC bash
+./install
+#+END_SRC
+
+Alternatively, you can also use [[https://www.gnu.org/software/stow/][GNU Stow]]
+
+* TODO Specifics
