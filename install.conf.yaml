@@ -1,0 +1,22 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+
+- clean: ['~']
+
+- link:
+    ~/.dotfiles: ''
+    ~/.doom.d: 'emacs/.doom.d'
+    ~/.vimrc: vim/.vimrc
+    ~/.vim: vim/.vim
+    ~/.bashrc: bash/.bashrc
+    ~/.bash_aliases: bash/.bash_aliases
+
+- create:
+    - ~/.vim/undo-history
+
+- shell:
+    - mkdir -p ~/src
+    - mkdir -p ~/.Trash
+    - [git submodule update --init --recursive, Installing submodules]
